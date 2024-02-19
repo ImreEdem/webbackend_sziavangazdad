@@ -19,7 +19,7 @@ module.exports = function(app) {
       host: 'localhost',
       user: 'root',
       password: '',
-      database: 'web_zarodoga'
+      database: 'webrobiadam'
     })
     
     connection.connect()
@@ -101,7 +101,7 @@ connection.end()
 app.get('/diagram', (req, res) => {
   kapcsolat()
 
-connection.query('SELECT film.film_cim, COUNT(szavazat_id) as Szavazatok_szama from szavazat inner join film on film.film_id = szavazat_film GROUP BY film.film_id', (err, rows, fields) => {
+connection.query('SELECT date_format(orokbefogadas.orokbefogadas_datum, "%M") as honap, COUNT(orokbefogadas.orokbefogadas_id) as orokbefogadasok FROM orokbefogadas GROUP by honap ORDER BY orokbefogadas_datum ASC', (err, rows, fields) => {
   if (err) throw err
 
   console.log(rows)
