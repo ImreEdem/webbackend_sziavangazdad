@@ -143,5 +143,36 @@ app.get('/elveszett', (req, res) => {
   connection.end(); // Close the database connection
 });
 
+app.delete('/torles_allatok', (req, res) => {
+  kapcsolat()
+  connection.query(`DELETE FROM allatok WHERE allatok_id = ${req.body.bevitel1}`, function (err, rows, fields) {
+    if (err) {
+      console.log("Hiba!")
+      res.send("Hiba!")
+    }
+    else {
+    console.log("Törlés sikerült!")
+    res.send("Törlés sikerült!")
+    }
+  })
+  connection.end()
+})
 
+
+app.get('/allatok', (req, res) => {
+  kapcsolat(); // Assuming kapcsolat is a function to establish a database connection
+
+  connection.query('SELECT * FROM allatok', (err, rows, fields) => {
+    if (err) {
+      console.error('Hiba a lekérdezés során: ' + err);
+      res.status(500).send('Hiba a lekérdezés során');
+      return;
+    }
+
+    res.json(rows);
+  });
+
+  connection.end(); // Close the database connection
+});
 };
+
